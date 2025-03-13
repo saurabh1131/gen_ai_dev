@@ -24,7 +24,8 @@ from rank_bm25 import BM25Okapi
 from sentence_transformers import CrossEncoder
 from sklearn.metrics.pairwise import cosine_similarity
 
-
+import sys
+sys.path.append('/mount/src/gen_ai_dev')
 
 # these three lines swap the stdlib sqlite3 lib with the pysqlite3 package
 import pysqlite3
