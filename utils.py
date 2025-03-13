@@ -24,6 +24,11 @@ from rank_bm25 import BM25Okapi
 from sentence_transformers import CrossEncoder
 from sklearn.metrics.pairwise import cosine_similarity
 
+import pysqlite3
+import sys
+sys.modules["sqlite3"] = pysqlite3
+
+
 # Initialize NLTK stopwords
 nltk.download('stopwords')
 stop_words = set(stopwords.words('english'))
