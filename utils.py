@@ -41,8 +41,10 @@ import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 # Initialize NLTK stopwords
-nltk.download('stopwords')
-stop_words = set(stopwords.words('english'))
+# nltk.download('stopwords')
+# stop_words = set(stopwords.words('english'))
+nltk.data.path.append('./nltk_data')  # Point to local NLTK data
+stop_words = set(nltk.corpus.stopwords.words('english'))
 
 # Configuration
 DATA_PATH = "./Infy financial report/"
