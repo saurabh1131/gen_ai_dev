@@ -50,7 +50,7 @@ stop_words = set(nltk.corpus.stopwords.words('english'))
 DATA_PATH = "./Infy financial report/"
 DATA_FILES = ["INFY_2022_2023.pdf", "INFY_2023_2024.pdf"]
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
-LLM_MODEL = "microsoft/phi-2"
+LLM_MODEL = "HuggingFaceH4/zephyr-7b-beta" #"microsoft/phi-2"
 
 # Environment settings
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
@@ -137,9 +137,7 @@ class ConversationMemory:
             [f"Previous Q: {q}\nPrevious A: {r}" for q, r in self.buffer]
         )
 
-
 memory = ConversationMemory(max_size=3)
-
 
 # ------------------------------
 # Hybrid Retrieval System
@@ -241,19 +239,11 @@ try:
     @st.cache_resource(show_spinner=False)
     def load_generator():
         tokenizer = AutoTokenizer.from_pretrained(LLM_MODEL)
-        if torch.cuda.is_available():
-            model = AutoModelForCausalLM.from_pretrained(
-                LLM_MODEL,
-                device_map="auto",
-                torch_dtype=torch.bfloat16,
-                load_in_4bit=True
-            )
-        else:
-            model = AutoModelForCausalLM.from_pretrained(
-                LLM_MODEL,
-                device_map="cpu",
-                torch_dtype=torch.float32
-            )
+        model = AutoModelForCausalLM.from_pretrained(
+            LLM_MODEL,
+            device_map="cpu",
+            torch_dtype=torch.float32
+        )
         return pipeline(
             "text-generation",
             model=model,
