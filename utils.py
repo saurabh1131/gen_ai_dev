@@ -211,12 +211,21 @@ guard = SafetyGuard()
 # ------------------------------
 try:
     tokenizer = AutoTokenizer.from_pretrained(LLM_MODEL)
-    model = AutoModelForCausalLM.from_pretrained(
-        LLM_MODEL,
-        device_map="auto",
-        torch_dtype=torch.bfloat16,
-        load_in_4bit=True
-    )
+    if torch.cuda.is_available():
+        # If a CUDA device is available, load the model in 4-bit mode
+        model = AutoModelForCausalLM.from_pretrained(
+            LLM_MODEL,
+            device_map="auto",
+            torch_dtype=torch.bfloat16,
+            load_in_4bit=True
+        )
+    else:
+        # Otherwise, load the model normally on CPU
+        model = AutoModelForCausalLM.from_pretrained(
+            LLM_MODEL,
+            device_map="cpu",
+            torch_dtype=torch.float32
+        )
     
     generator = pipeline(
         "text-generation",
