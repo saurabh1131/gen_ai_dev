@@ -24,9 +24,16 @@ from rank_bm25 import BM25Okapi
 from sentence_transformers import CrossEncoder
 from sklearn.metrics.pairwise import cosine_similarity
 
+
+
+# these three lines swap the stdlib sqlite3 lib with the pysqlite3 package
 import pysqlite3
 import sys
 sys.modules["sqlite3"] = pysqlite3
+
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 
 # Initialize NLTK stopwords
