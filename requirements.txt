@@ -238,4 +238,3 @@ wrapt
 yarl
 zipp
 zstandard
-sqlite3
