@@ -1,4 +1,8 @@
 import streamlit as st
+
+import sys
+sys.path.append('/mount/src/gen_ai_dev')
+
 from utils import generate_answer
 
 # Streamlit configuration
