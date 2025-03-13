@@ -1,8 +1,20 @@
 import streamlit as st
 
+
+
+# these three lines swap the stdlib sqlite3 lib with the pysqlite3 package
+
+import pysqlite3
+import sys
+sys.modules["sqlite3"] = pysqlite3
+
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
+# utils
 import sys
 sys.path.append('/mount/src/gen_ai_dev')
-
 from utils import generate_answer
 
 # Streamlit configuration
